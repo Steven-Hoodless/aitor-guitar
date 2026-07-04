@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aitor Guitar — Tu Músico en Bizkaia</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --primary:      #0c2828;
+            --accent:       #ff5a1f;
+            --accent-light: #ff7a45;
+            --accent-pale:  rgba(255,90,31,0.12);
+            --bg:           #091e1e;
+            --surface:      #122f2f;
+            --surface2:     #1a3d3d;
+            --text:         #f0f4f4;
+            --text-muted:   #7aadad;
+            --success:      #4caf87;
+            --danger:       #e05555;
+            --radius:       12px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(9,30,30,0.97);
+            backdrop-filter: blur(12px);
+            padding: 0.9rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,90,31,0.25);
+        }
+        .nav-brand { display: flex; flex-direction: column; line-height: 1.1; }
+        .nav-brand .nav-name { font-size: 1.35rem; font-weight: 900; color: var(--text); letter-spacing: 0.04em; }
+        .nav-brand .nav-sub  { font-size: 0.68rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
+        .nav-right { display: flex; align-items: center; gap: 2rem; }
+        .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* language switcher */
+        .lang-switcher { display: flex; gap: 0.3rem; }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,90,31,0.3);
+            color: var(--text-muted);
+            padding: 0.3rem 0.65rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .lang-btn:hover  { border-color: var(--accent); color: var(--accent); }
+        .lang-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 5rem 2rem 4rem;
+            background:
+                radial-gradient(ellipse at 70% 30%, rgba(255,90,31,0.09) 0%, transparent 55%),
+                linear-gradient(160deg, #0c2828 0%, #091e1e 60%, #0a1f1f 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 15% 85%, rgba(255,90,31,0.06) 0%, transparent 40%),
+                radial-gradient(circle at 85% 15%, rgba(255,90,31,0.04) 0%, transparent 35%);
+            pointer-events: none;
+        }
+        .hero-eyebrow {
+            font-size: 0.8rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        /* AITOR brushstroke image — screen blend knocks out the black background */
+        .hero-aitor-crop {
+            width: min(560px, 92vw);
+            overflow: hidden;
+            margin: 0 auto 0.5rem;
+            line-height: 0;
+        }
+        .hero-aitor-img {
+            width: 100%;
+            display: block;
+            /* screen blend: black pixels become transparent, white text floats on page */
+            mix-blend-mode: screen;
+        }
+        .hero-sub {
+            font-size: clamp(1rem, 3vw, 1.6rem);
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.75rem;
+        }
+        .hero-tagline {
+            font-size: clamp(0.95rem, 2vw, 1.2rem);
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 480px;
+            font-style: italic;
+        }
+        .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+        .btn {
+            padding: 0.85rem 2.2rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            letter-spacing: 0.04em;
+            display: inline-block;
+            font-family: inherit;
+        }
+        .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 20px rgba(255,90,31,0.3); }
+        .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255,90,31,0.4); }
+        .btn-outline { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
+        .btn-outline:hover { background: rgba(255,90,31,0.1); transform: translateY(-2px); }
+
+        /* ── SECTIONS ── */
+        section { padding: 5rem 2rem; max-width: 1050px; margin: 0 auto; }
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .section-title {
+            font-size: clamp(1.9rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+        .divider { width: 56px; height: 4px; background: var(--accent); margin-bottom: 2.25rem; border-radius: 2px; }
+
+        /* ── ABOUT ── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+        .about-text p { color: var(--text-muted); margin-bottom: 1rem; font-size: 1.05rem; }
+        .about-stats { display: flex; gap: 2rem; margin-top: 1.75rem; flex-wrap: wrap; }
+        .stat { text-align: center; }
+        .stat-num { font-size: 2rem; font-weight: 900; color: var(--accent); line-height: 1; }
+        .stat-lbl { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+        .about-image {
+            border-radius: var(--radius);
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+        }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+
+        /* ── PERFORMANCES ── */
+        .performances-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+            gap: 1.25rem;
+        }
+        .perf-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.75rem 1.25rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+        }
+        .perf-card:hover {
+            border-color: rgba(255,90,31,0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(255,90,31,0.1);
+        }
+        .perf-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+        .perf-card h3 { font-size: 1rem; margin-bottom: 0.4rem; color: var(--text); }
+        .perf-card p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; }
+
+        /* ── IDEAL PARA ── */
+        .ideal-section {
+            background: var(--surface);
+            border-top: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            padding: 3rem 2rem;
+        }
+        .ideal-inner { max-width: 1050px; margin: 0 auto; }
+        .ideal-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .ideal-title {
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .ideal-chips { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+        .ideal-chip {
+            background: var(--surface2);
+            border: 1px solid rgba(255,90,31,0.2);
+            border-radius: 50px;
+            padding: 0.6rem 1.4rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ── CONTACT STRIP ── */
+        .contact-strip {
+            background: var(--accent);
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        .contact-item { display: flex; align-items: center; gap: 0.75rem; color: #fff; }
+        .contact-item .icon { font-size: 1.25rem; }
+        .contact-item a { color: #fff; text-decoration: none; font-weight: 600; }
+        .contact-item a:hover { text-decoration: underline; }
+
+        /* ── CALENDAR ── */
+        .calendar-wrapper {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        .cal-nav {
+            background: var(--surface2);
+            border: none;
+            color: var(--text);
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, color 0.2s;
+        }
+        .cal-nav:hover { background: rgba(255,90,31,0.2); color: var(--accent); }
+        .cal-nav:disabled { opacity: 0.25; cursor: not-allowed; }
+        .cal-nav:disabled:hover { background: var(--surface2); color: var(--text); }
+        .cal-month-year { font-size: 1.2rem; font-weight: 700; }
+
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+        .cal-day-name {
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.5rem 0;
+        }
+        .cal-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            position: relative;
+        }
+        .cal-day.empty { cursor: default; }
+        .cal-day.past  { color: rgba(255,255,255,0.16); cursor: not-allowed; }
+        .cal-day.unavailable {
+            background: rgba(224,85,85,0.22);
+            color: #f08080;
+            cursor: not-allowed;
+            text-decoration: line-through;
+            text-decoration-color: rgba(224,85,85,0.6);
+            border: 1px solid rgba(224,85,85,0.35);
+        }
+        .cal-day.unavailable::after {
+            content: '';
+            position: absolute;
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--danger);
+            bottom: 3px;
+            box-shadow: 0 0 4px rgba(224,85,85,0.5);
+        }
+        .cal-day.available {
+            background: rgba(100,210,120,0.13);
+            color: #a8e6b8;
+            border: 1px solid rgba(100,210,120,0.28);
+        }
+        .cal-day.available:hover {
+            background: rgba(100,210,120,0.28);
+            color: #d0f0d8;
+            transform: scale(1.1);
+            border-color: rgba(100,210,120,0.55);
+        }
+        .cal-day.selected {
+            background: var(--accent) !important;
+            color: #fff !important;
+            font-weight: 800;
+            transform: scale(1.1);
+            box-shadow: 0 2px 12px rgba(255,90,31,0.4);
+        }
+
+        .cal-legend { display: flex; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--text-muted); }
+        .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+        .legend-dot.available   { background: rgba(100,210,120,0.55); border: 1px solid rgba(100,210,120,0.7); }
+        .legend-dot.unavailable { background: rgba(224,85,85,0.55); border: 1px solid rgba(224,85,85,0.7); }
+        .legend-dot.selected    { background: var(--accent); }
+
+        /* ── FORM ── */
+        .form-tabs {
+            display: flex;
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 0.4rem;
+            margin-bottom: 1.75rem;
+            gap: 0.4rem;
+        }
+        .form-tab {
+            flex: 1;
+            padding: 0.8rem;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+        }
+        .form-tab.active { background: var(--accent); color: #fff; }
+
+        .form-panel { display: none; }
+        .form-panel.active { display: block; }
+
+        .form-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .form-card h3 { font-size: 1.25rem; margin-bottom: 0.35rem; }
+        .form-subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+        .selected-date-banner {
+            background: rgba(255,90,31,0.1);
+            border: 1px solid rgba(255,90,31,0.35);
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--accent);
+            display: none;
+        }
+        .selected-date-banner.visible { display: block; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: var(--surface2);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus { border-color: var(--accent); }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: rgba(255,255,255,0.18); }
+        .form-group input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); cursor: pointer; }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.04em;
+            font-family: inherit;
+            box-shadow: 0 4px 16px rgba(255,90,31,0.25);
+        }
+        .form-submit:hover { background: var(--accent-light); transform: translateY(-1px); }
+        .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        .form-success { display: none; text-align: center; padding: 3rem 1rem; }
+        .form-success.visible { display: block; }
+        .form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .form-success h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+        .form-success p { color: var(--text-muted); }
+
+        /* ── WHATSAPP ── */
+        .whatsapp-bar {
+            background: #25d366;
+            padding: 1.25rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .whatsapp-bar p { color: #fff; font-size: 0.95rem; font-weight: 500; }
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fff;
+            color: #25d366;
+            padding: 0.65rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .btn-whatsapp:hover { background: #f0fff4; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+        .whatsapp-inline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: #25d366;
+            color: #fff;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-top: 0.75rem;
+        }
+        .whatsapp-inline:hover { background: #1fb959; transform: translateY(-1px); }
+        .or-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.25rem 0 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .or-divider::before, .or-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--primary);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        footer span { color: var(--accent); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 700px) {
+            .nav-links { display: none; }
+            .about-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .contact-strip { gap: 1.5rem; }
+            section { padding: 3rem 1.25rem; }
+            .form-card { padding: 1.25rem; }
+            .lang-switcher { gap: 0.2rem; }
+            .lang-btn { padding: 0.3rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-brand">
+        <span class="nav-name">Aitor Guitar</span>
+        <span class="nav-sub" data-i18n="nav_sub">Tu Músico en Bizkaia</span>
+    </div>
+    <div class="nav-right">
+        <ul class="nav-links">
+            <li><a href="#about"         data-i18n="nav_about">Sobre mí</a></li>
+            <li><a href="#performances"  data-i18n="nav_perf">Qué ofrezco</a></li>
+            <li><a href="#availability"  data-i18n="nav_avail">Disponibilidad</a></li>
+            <li><a href="#contact"       data-i18n="nav_contact">Contacto</a></li>
+        </ul>
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="setLang('es')">ES</button>
+            <button class="lang-btn"        onclick="setLang('eu')">EU</button>
+            <button class="lang-btn"        onclick="setLang('en')">EN</button>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-aitor-crop">
+        <img class="hero-aitor-img" src="Aitor 2 gif.jpg" alt="AITOR">
+    </div>
+    <p class="hero-sub" data-i18n="hero_sub">Tu Músico en Bizkaia</p>
+    <p class="hero-tagline" data-i18n="hero_tagline">Música en vivo, buen rollo asegurado</p>
+    <div class="hero-cta">
+        <a href="#availability" class="btn btn-primary" data-i18n="hero_cta1">Ver Disponibilidad</a>
+        <a href="#contact"      class="btn btn-outline" data-i18n="hero_cta2">Contratar</a>
+    </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="section-label" data-i18n="about_label">Sobre mí</div>
+    <h2 class="section-title" data-i18n="about_title">El músico detrás de la guitarra</h2>
+    <div class="divider"></div>
+    <div class="about-grid">
+        <div class="about-text">
+            <p data-i18n="about_p1">Llevo años animando espacios con mi talento, energía y cercanía. Mi música conecta con la gente de forma directa y genuina, creando momentos que perduran.</p>
+            <p data-i18n="about_p2">Conciertos, jams, proyectos con loopers y fiestas de música en vivo. Experiencia, profesionalidad y pasión por la música en cada actuación.</p>
+            <p data-i18n="about_p3">Basado en Bizkaia, disponible para eventos en todo el País Vasco y alrededores.</p>
+            <div class="about-stats">
+                <div class="stat"><div class="stat-num">+1000</div><div class="stat-lbl" data-i18n="stat_shows">Actuaciones</div></div>
+                <div class="stat"><div class="stat-num">+20</div><div class="stat-lbl" data-i18n="stat_years">Años de experiencia</div></div>
+                <div class="stat"><div class="stat-num">∞</div><div class="stat-lbl" data-i18n="stat_passion">Pasión</div></div>
+            </div>
+        </div>
+        <div class="about-image">
+            <img src="Aitor Photo.jpg" alt="Aitor">
+        </div>
+    </div>
+</section>
+
+<!-- PERFORMANCES -->
+<section id="performances">
+    <div class="section-label" data-i18n="perf_label">¿Qué ofrezco?</div>
+    <h2 class="section-title" data-i18n="perf_title">Música para cada momento</h2>
+    <div class="divider"></div>
+    <div class="performances-grid">
+        <div class="perf-card">
+            <div class="perf-icon">🎸</div>
+            <h3 data-i18n="perf1_title">Conciertos</h3>
+            <p data-i18n="perf1_desc">Versiones de éxitos que hacen vibrar al público. Energía, ritmo y conexión con la audiencia.</p>
+        </div>
+        <div class="perf-card">
+            <div class="perf-icon">🎶</div>
+            <h3 data-i18n="perf2_title">Jams</h3>
+            <p data-i18n="perf2_desc">Sesiones abiertas de improvisación y jam sessions. Música espontánea y creativa en tiempo real.</p>
+        </div>
+        <div class="perf-card">
+            <div class="perf-icon">🔁</div>
+            <h3 data-i18n="perf3_title">Looper Band Projects</h3>
+            <p data-i18n="perf3_desc">Música compuesta con loops, innovación y creatividad. Un sonido único que sorprende a todos.</p>
+        </div>
+        <div class="perf-card">
+            <div class="perf-icon">🎪</div>
+            <h3 data-i18n="perf4_title">Al Music Fest</h3>
+            <p data-i18n="perf4_desc">Festivales de música, recitales y proyectos artísticos. Para los grandes escenarios y eventos.</p>
+        </div>
+        <div class="perf-card">
+            <div class="perf-icon">🎛️</div>
+            <h3 data-i18n="perf5_title">Equipo Incluido</h3>
+            <p data-i18n="perf5_desc">Guitarras, bajo, pedalera y cajón. Tú solo disfruta — yo me encargo del sonido.</p>
+        </div>
+    </div>
+</section>
+
+<!-- IDEAL PARA -->
+<div class="ideal-section">
+    <div class="ideal-inner">
+        <div class="ideal-label" data-i18n="ideal_label">Ideal para</div>
+        <h2 class="ideal-title" data-i18n="ideal_title">¿Tienes un evento? Cuento contigo</h2>
+        <div class="ideal-chips">
+            <div class="ideal-chip">🍺 <span data-i18n="ideal1">Bares</span></div>
+            <div class="ideal-chip">🎉 <span data-i18n="ideal2">Fiestas</span></div>
+            <div class="ideal-chip">🎆 <span data-i18n="ideal3">Fiestas Populares</span></div>
+            <div class="ideal-chip">🎂 <span data-i18n="ideal4">Cumpleaños</span></div>
+            <div class="ideal-chip">🤝 <span data-i18n="ideal5">Eventos Privados</span></div>
+            <div class="ideal-chip">💍 <span data-i18n="ideal6">Bodas</span></div>
+            <div class="ideal-chip">🏢 <span data-i18n="ideal7">Eventos Corporativos</span></div>
+            <div class="ideal-chip">✨ <span data-i18n="ideal8">¡Y mucho más!</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- CONTACT STRIP -->
+<div class="contact-strip">
+    <div class="contact-item">
+        <span class="icon">📱</span>
+        <span><a href="tel:+346688646407">688 646 407</a></span>
+    </div>
+    <div class="contact-item">
+        <span class="icon">📸</span>
+        <span><a href="https://instagram.com/Aitor_imaz" target="_blank">@Aitor_imaz</a></span>
+    </div>
+    <div class="contact-item">
+        <span class="icon">📍</span>
+        <span>Bizkaia, País Vasco</span>
+    </div>
+</div>
+
+<!-- CALENDAR -->
+<section id="availability">
+    <div class="section-label" data-i18n="cal_label">Disponibilidad</div>
+    <h2 class="section-title" data-i18n="cal_title">Consulta mi calendario</h2>
+    <div class="divider"></div>
+    <p style="color:var(--text-muted);margin-bottom:1.5rem;" data-i18n="cal_hint">
+        Haz clic en una fecha disponible para iniciar una solicitud de reserva. Las fechas en rojo ya están ocupadas.
+    </p>
+    <div class="calendar-wrapper">
+        <div class="calendar-header">
+            <button class="cal-nav" id="prevMonth">&#8592;</button>
+            <div class="cal-month-year" id="calMonthYear"></div>
+            <button class="cal-nav" id="nextMonth">&#8594;</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-legend">
+            <div class="legend-item"><div class="legend-dot available"></div> <span data-i18n="legend_avail">Disponible</span></div>
+            <div class="legend-item"><div class="legend-dot unavailable"></div> <span data-i18n="legend_unavail">No disponible / Reservado</span></div>
+            <div class="legend-item"><div class="legend-dot selected"></div> <span data-i18n="legend_sel">Seleccionado</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT / BOOKING -->
+<section id="contact">
+    <div class="section-label" data-i18n="form_label">Contratación</div>
+    <h2 class="section-title" data-i18n="form_title">Reservar o Contactar</h2>
+    <div class="divider"></div>
+
+    <div class="form-tabs">
+        <button class="form-tab active" id="tabBook"    onclick="switchTab('book')"   data-i18n="tab_book">📅 Reservar una Fecha</button>
+        <button class="form-tab"        id="tabMessage" onclick="switchTab('message')" data-i18n="tab_msg">✉️ Enviar un Mensaje</button>
+    </div>
+
+    <!-- BOOKING FORM -->
+    <div class="form-panel active" id="panelBook">
+        <div class="form-card">
+            <h3 data-i18n="book_title">Solicitud de Reserva</h3>
+            <p class="form-subtitle" data-i18n="book_sub">Selecciona una fecha en el calendario o escribe tu fecha preferida.</p>
+            <div class="selected-date-banner" id="selectedDateBanner"></div>
+            <form id="bookingForm" action="https://formspree.io/f/xnjkqkka" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="field_name">Tu Nombre *</label>
+                        <input type="text" name="name" data-i18n-ph="ph_name" placeholder="María García" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="field_date">Fecha del Evento *</label>
+                        <input type="date" name="event_date" id="eventDateInput" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="field_email">Email *</label>
+                        <input type="email" name="email" data-i18n-ph="ph_email" placeholder="maria@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="field_phone">Teléfono *</label>
+                        <input type="tel" name="phone" data-i18n-ph="ph_phone" placeholder="+34 600 000 000" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="field_event">Tipo de Evento</label>
+                    <input type="text" name="event_type" data-i18n-ph="ph_event" placeholder="Ej: Cumpleaños, Boda, Evento corporativo...">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="field_msg">Mensaje</label>
+                    <textarea name="message" data-i18n-ph="ph_book_msg" placeholder="Cuéntame más sobre tu evento — número de invitados, lugar, peticiones especiales..."></textarea>
+                </div>
+                <input type="hidden" name="_subject" value="Nueva Solicitud de Reserva — Aitor Guitar">
+                <button type="submit" class="form-submit" data-i18n="btn_book">Enviar Solicitud de Reserva</button>
+                <div class="or-divider" data-i18n="or_divider">o también puedes</div>
+                <a id="waBookBtn" href="#" target="_blank" class="whatsapp-inline" data-i18n="wa_book">&#128249; Enviar por WhatsApp</a>
+            </form>
+            <div class="form-success" id="bookSuccess">
+                <div class="success-icon">✅</div>
+                <h3 data-i18n="success_title">¡Solicitud Enviada!</h3>
+                <p data-i18n="success_book">Gracias — me pondré en contacto contigo en menos de 24 horas para confirmar la reserva.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MESSAGE FORM -->
+    <div class="form-panel" id="panelMessage">
+        <div class="form-card">
+            <h3 data-i18n="msg_title">Enviar un Mensaje</h3>
+            <p class="form-subtitle" data-i18n="msg_sub">¿Tienes alguna pregunta? Escríbeme directamente.</p>
+            <form id="messageForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-i18n="field_name">Tu Nombre *</label>
+                        <input type="text" name="name" data-i18n-ph="ph_name" placeholder="María García" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="field_email">Email *</label>
+                        <input type="email" name="email" data-i18n-ph="ph_email" placeholder="maria@email.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="field_phone">Teléfono</label>
+                    <input type="tel" name="phone" data-i18n-ph="ph_phone" placeholder="+34 600 000 000">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="field_msg">Mensaje *</label>
+                    <textarea name="message" data-i18n-ph="ph_msg" placeholder="Hola, me gustaría saber si estás disponible para..." required></textarea>
+                </div>
+                <input type="hidden" name="_subject" value="Nuevo Mensaje — Aitor Guitar">
+                <button type="submit" class="form-submit" data-i18n="btn_msg">Enviar Mensaje</button>
+                <div class="or-divider" data-i18n="or_divider">o también puedes</div>
+                <a id="waMsgBtn" href="#" target="_blank" class="whatsapp-inline" data-i18n="wa_msg">&#128249; Enviar por WhatsApp</a>
+            </form>
+            <div class="form-success" id="messageSuccess">
+                <div class="success-icon">✅</div>
+                <h3 data-i18n="success_title">¡Mensaje Enviado!</h3>
+                <p data-i18n="success_msg">Gracias por escribirme — te responderé lo antes posible.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHATSAPP BAR -->
+<div class="whatsapp-bar">
+    <p data-i18n="wa_bar">¿Prefieres WhatsApp? ¡Escríbeme directamente!</p>
+    <a id="waBarBtn" href="#" target="_blank" class="btn-whatsapp">
+        &#128249; WhatsApp
+    </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2026 <span>Aitor Guitar</span>. <span data-i18n="footer">Todos los derechos reservados.</span></p>
+</footer>
+
+<script src="dates.js"></script>
+<script>
+// ================================================================
+// TRANSLATIONS
+// ================================================================
+const TRANSLATIONS = {
+    es: {
+        nav_sub:   'Tu Músico en Bizkaia',
+        nav_about: 'Sobre mí', nav_perf: 'Qué ofrezco', nav_avail: 'Disponibilidad', nav_contact: 'Contacto',
+        hero_eyebrow: 'Música en Vivo · Bizkaia',
+        hero_tagline_top: 'Música en Vivo, Buen Rollo Asegurado',
+        hero_sub:  'Tu Músico en Bizkaia',
+        hero_tagline: 'Música en vivo, buen rollo asegurado',
+        hero_cta1: 'Ver Disponibilidad', hero_cta2: 'Contratar',
+        about_label: 'Sobre mí', about_title: 'El músico detrás de la guitarra',
+        about_p1: 'Llevo años animando espacios con mi talento, energía y cercanía. Mi música conecta con la gente de forma directa y genuina, creando momentos que perduran.',
+        about_p2: 'Conciertos, jams, proyectos con loopers y fiestas de música en vivo. Experiencia, profesionalidad y pasión por la música en cada actuación.',
+        about_p3: 'Basado en Bizkaia, disponible para eventos en todo el País Vasco y alrededores.',
+        stat_shows: 'Actuaciones', stat_years: 'Años de experiencia', stat_passion: 'Pasión',
+        about_photo_placeholder: '[ Foto de Aitor ]',
+        perf_label: '¿Qué ofrezco?', perf_title: 'Música para cada momento',
+        perf1_title: 'Conciertos',             perf1_desc: 'Versiones de éxitos que hacen vibrar al público. Energía, ritmo y conexión con la audiencia.',
+        perf2_title: 'Jams',                   perf2_desc: 'Sesiones abiertas de improvisación y jam sessions. Música espontánea y creativa en tiempo real.',
+        perf3_title: 'Looper Band Projects',   perf3_desc: 'Música compuesta con loops, innovación y creatividad. Un sonido único que sorprende a todos.',
+        perf4_title: 'Al Music Fest',          perf4_desc: 'Festivales de música, recitales y proyectos artísticos. Para los grandes escenarios y eventos.',
+        perf5_title: 'Equipo Incluido',        perf5_desc: 'Guitarras, bajo, pedalera y cajón. Tú solo disfruta — yo me encargo del sonido.',
+        ideal_label: 'Ideal para', ideal_title: '¿Tienes un evento? Cuento contigo',
+        ideal1: 'Bares', ideal2: 'Fiestas', ideal3: 'Fiestas Populares', ideal4: 'Cumpleaños',
+        ideal5: 'Eventos Privados', ideal6: 'Bodas', ideal7: 'Eventos Corporativos', ideal8: '¡Y mucho más!',
+        cal_label: 'Disponibilidad', cal_title: 'Consulta mi calendario',
+        cal_hint: 'Haz clic en una fecha disponible para iniciar una solicitud de reserva. Las fechas en rojo ya están ocupadas.',
+        legend_avail: 'Disponible', legend_unavail: 'No disponible / Reservado', legend_sel: 'Seleccionado',
+        form_label: 'Contratación', form_title: 'Reservar o Contactar',
+        tab_book: '📅 Reservar una Fecha', tab_msg: '✉️ Enviar un Mensaje',
+        book_title: 'Solicitud de Reserva', book_sub: 'Selecciona una fecha en el calendario o escribe tu fecha preferida.',
+        msg_title: 'Enviar un Mensaje', msg_sub: '¿Tienes alguna pregunta? Escríbeme directamente.',
+        field_name: 'Tu Nombre *', field_date: 'Fecha del Evento *', field_email: 'Email *',
+        field_phone: 'Teléfono *', field_event: 'Tipo de Evento', field_msg: 'Mensaje',
+        ph_name: 'María García', ph_email: 'maria@email.com', ph_phone: '+34 600 000 000',
+        ph_event: 'Ej: Cumpleaños, Boda, Evento corporativo...',
+        ph_book_msg: 'Cuéntame más sobre tu evento — número de invitados, lugar, peticiones especiales...',
+        ph_msg: 'Hola, me gustaría saber si estás disponible para...',
+        btn_book: 'Enviar Solicitud de Reserva', btn_msg: 'Enviar Mensaje',
+        success_title: '¡Enviado!',
+        success_book: 'Gracias — me pondré en contacto contigo en menos de 24 horas para confirmar la reserva.',
+        success_msg: 'Gracias por escribirme — te responderé lo antes posible.',
+        banner_prefix: '📅 Fecha seleccionada:',
+        footer: 'Todos los derechos reservados.',
+        wa_bar: '¿Prefieres WhatsApp? ¡Escríbeme directamente!',
+        or_divider: 'o también puedes',
+        wa_book: '📱 Enviar reserva por WhatsApp',
+        wa_msg:  '📱 Enviar mensaje por WhatsApp',
+        wa_book_msg: 'Hola Aitor, me gustaría reservarte para un evento.',
+        wa_msg_msg:  'Hola Aitor, tengo una consulta.',
+        months: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+        days:   ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
+    },
+    eu: {
+        nav_sub:   'Zure Musikaria Bizkaian',
+        nav_about: 'Niri buruz', nav_perf: 'Zer eskaintzen dut', nav_avail: 'Eskuragarritasuna', nav_contact: 'Kontaktua',
+        hero_eyebrow: 'Zuzeneko Musika · Bizkaia',
+        hero_tagline_top: 'Zuzeneko Musika, Giro Ona Bermatua',
+        hero_sub:  'Zure Musikaria Bizkaian',
+        hero_tagline: 'Zuzeneko musika, giro ona bermatua',
+        hero_cta1: 'Ikusi Eskuragarritasuna', hero_cta2: 'Kontratatu',
+        about_label: 'Niri buruz', about_title: 'Gitarraren atzean dagoen musikaria',
+        about_p1: 'Urte asko daramatzat espazioak biziberritzen nire talentu, energia eta gertutasunarekin. Nire musikak jendea zuzenean eta benetakotasunez konektatzen du, iraunkorrak diren une bereziak sortuz.',
+        about_p2: 'Kontzertoak, jam saioak, looper proiektuak eta zuzeneko musika festak. Esperientzia, profesionaltasuna eta musikaren maitasuna ekitaldi bakoitzean.',
+        about_p3: 'Bizkaian oinarritua, Euskal Herri osoan eta inguruko ekitaldietarako erabilgarri.',
+        stat_shows: 'Emanaldiak', stat_years: 'Esperientzia urteak', stat_passion: 'Pasioa',
+        about_photo_placeholder: '[ Aitoren Argazkia ]',
+        perf_label: 'Zer eskaintzen dut?', perf_title: 'Musika une bakoitzerako',
+        perf1_title: 'Kontzertoak',           perf1_desc: 'Arrakasta izandako abestien bertsioak publikoa bibratzea eragiten dutenak. Energia, erritmoa eta harremana.',
+        perf2_title: 'Jam Saioak',            perf2_desc: 'Inprobisazio saio irekiak eta jam sessionak. Musika espontanea eta sortzailea denbora errealean.',
+        perf3_title: 'Looper Band Proiektuak',perf3_desc: 'Loop-ekin osatutako musika, berrikuntza eta sormena. Denak harritzeko soinu bakarra.',
+        perf4_title: 'Al Music Fest',         perf4_desc: 'Musika jaialdiak, errezitataldiak eta proiektu artistikoak. Eszena handietarako eta ekitaldietarako.',
+        perf5_title: 'Ekipoa Barne',          perf5_desc: 'Guitarrak, baxua, pedalera eta kajoña. Zuk gozatu besterik ez — ni arduratuko naiz soinuaz.',
+        ideal_label: 'Apropos hauetarako', ideal_title: 'Ba al duzu ekitaldi bat? Zurekin nago',
+        ideal1: 'Tabernak', ideal2: 'Festak', ideal3: 'Herri Festak', ideal4: 'Urtebetetzeak',
+        ideal5: 'Ekitaldi Pribatuak', ideal6: 'Ezkontzak', ideal7: 'Korporazio Ekitaldiak', ideal8: 'Eta askoz gehiago!',
+        cal_label: 'Eskuragarritasuna', cal_title: 'Kontsultatu nire egutegia',
+        cal_hint: 'Egin klik eskuragarri dagoen data batean erreserbazioaren eskaera hasteko. Gorriz dauden datak hartuta daude.',
+        legend_avail: 'Eskuragarri', legend_unavail: 'Ez eskuragarri / Erreservatua', legend_sel: 'Hautatua',
+        form_label: 'Kontratazio', form_title: 'Erreserbatu edo Kontaktatu',
+        tab_book: '📅 Data Erreserbatu', tab_msg: '✉️ Mezua Bidali',
+        book_title: 'Erreserba Eskaera', book_sub: 'Hautatu data egutegiaren bidez edo idatzi nahi duzun data.',
+        msg_title: 'Mezua Bidali', msg_sub: 'Galderarik al duzu? Idatzi iezadazu zuzenean.',
+        field_name: 'Zure Izena *', field_date: 'Ekitaldiaren Data *', field_email: 'Email *',
+        field_phone: 'Telefonoa *', field_event: 'Ekitaldi Mota', field_msg: 'Mezua',
+        ph_name: 'Miren García', ph_email: 'miren@email.com', ph_phone: '+34 600 000 000',
+        ph_event: 'Adib: Urtebetetze, Ezkontza, Korporazio ekitaldia...',
+        ph_book_msg: 'Gehiago kontatu nire ekitaldiaz — gonbidatu kopurua, tokia, eskaera bereziak...',
+        ph_msg: 'Kaixo, jakin nahi nuke eskuragarri zauden...',
+        btn_book: 'Erreserba Eskaera Bidali', btn_msg: 'Mezua Bidali',
+        success_title: 'Bidalita!',
+        success_book: 'Eskerrik asko — 24 ordu baino lehen jarriko naiz zurekin harremanetan erreserba baieztatzeko.',
+        success_msg: 'Eskerrik asko idatzi izanagatik — ahalik eta lasterren erantzungo dizut.',
+        banner_prefix: '📅 Hautatutako data:',
+        footer: 'Eskubide guztiak erreserbatuta.',
+        wa_bar: 'WhatsApp nahiago duzu? Idatzi iezadazu zuzenean!',
+        or_divider: 'edo hau ere egin dezakezu',
+        wa_book: '📱 WhatsApp bidez bidali erreserba',
+        wa_msg:  '📱 WhatsApp bidez bidali mezua',
+        wa_book_msg: 'Kaixo Aitor, ekitaldi baterako kontratatu nahi zaitut.',
+        wa_msg_msg:  'Kaixo Aitor, galdera bat daukat.',
+        months: ['Urtarrila','Otsaila','Martxoa','Apirila','Maiatza','Ekaina','Uztaila','Abuztua','Iraila','Urria','Azaroa','Abendua'],
+        days:   ['Ig','Al','As','Az','Og','Or','La'],
+    },
+    en: {
+        nav_sub:   'Your Musician in Bizkaia',
+        nav_about: 'About', nav_perf: 'What I Offer', nav_avail: 'Availability', nav_contact: 'Contact',
+        hero_eyebrow: 'Live Music · Bizkaia',
+        hero_tagline_top: 'Live Music, Good Vibes Guaranteed',
+        hero_sub:  'Your Musician in Bizkaia',
+        hero_tagline: 'Live music, good vibes guaranteed',
+        hero_cta1: 'Check Availability', hero_cta2: 'Book Me',
+        about_label: 'About Me', about_title: 'The Musician Behind the Guitar',
+        about_p1: "I've spent years bringing spaces to life with my talent, energy and warmth. My music connects with people in a direct and genuine way, creating moments that last.",
+        about_p2: 'Concerts, jams, looper projects and live music parties. Experience, professionalism and a passion for music in every performance.',
+        about_p3: 'Based in Bizkaia, available for events across the Basque Country and beyond.',
+        stat_shows: 'Performances', stat_years: 'Years experience', stat_passion: 'Passion',
+        about_photo_placeholder: '[ Photo of Aitor ]',
+        perf_label: 'What I Offer', perf_title: 'Music for Every Moment',
+        perf1_title: 'Concerts',              perf1_desc: 'Cover versions of hit songs that get the crowd going. Energy, rhythm and connection with the audience.',
+        perf2_title: 'Jams',                  perf2_desc: 'Open improvisation and jam sessions. Spontaneous and creative music in real time.',
+        perf3_title: 'Looper Band Projects',  perf3_desc: 'Music built with loops, innovation and creativity. A unique sound that surprises everyone.',
+        perf4_title: 'Al Music Fest',         perf4_desc: 'Music festivals, recitals and artistic projects. For the big stages and large events.',
+        perf5_title: 'Equipment Included',    perf5_desc: 'Guitars, bass, pedalboard and cajón. You just enjoy it — I take care of the sound.',
+        ideal_label: 'Ideal For', ideal_title: 'Got an event? I\'ve got you covered',
+        ideal1: 'Bars', ideal2: 'Parties', ideal3: 'Street Festivals', ideal4: 'Birthdays',
+        ideal5: 'Private Events', ideal6: 'Weddings', ideal7: 'Corporate Events', ideal8: 'And much more!',
+        cal_label: 'Availability', cal_title: 'Check My Calendar',
+        cal_hint: 'Click an available date to start a booking enquiry. Red dates are already taken.',
+        legend_avail: 'Available', legend_unavail: 'Unavailable / Booked', legend_sel: 'Selected',
+        form_label: 'Booking', form_title: 'Book or Get in Touch',
+        tab_book: '📅 Book a Date', tab_msg: '✉️ Send a Message',
+        book_title: 'Booking Enquiry', book_sub: 'Select a date on the calendar above, or type your preferred date below.',
+        msg_title: 'Send a Message', msg_sub: 'Have a question? Drop me a message directly.',
+        field_name: 'Your Name *', field_date: 'Event Date *', field_email: 'Email *',
+        field_phone: 'Phone *', field_event: 'Type of Event', field_msg: 'Message',
+        ph_name: 'Jane Smith', ph_email: 'jane@email.com', ph_phone: '+34 600 000 000',
+        ph_event: 'e.g. Birthday party, Wedding, Corporate event...',
+        ph_book_msg: 'Tell me more about your event — number of guests, location, special requests...',
+        ph_msg: 'Hi, I was wondering if you are available for...',
+        btn_book: 'Send Booking Enquiry', btn_msg: 'Send Message',
+        success_title: 'Sent!',
+        success_book: 'Thank you — I will be in touch within 24 hours to confirm your booking.',
+        success_msg: 'Thanks for getting in touch — I will reply as soon as possible.',
+        banner_prefix: '📅 Selected date:',
+        footer: 'All rights reserved.',
+        wa_bar: 'Prefer WhatsApp? Message me directly!',
+        or_divider: 'or you can also',
+        wa_book: '📱 Send booking via WhatsApp',
+        wa_msg:  '📱 Send message via WhatsApp',
+        wa_book_msg: 'Hi Aitor, I would like to book you for an event.',
+        wa_msg_msg:  'Hi Aitor, I have a question.',
+        months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+        days:   ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+    },
+};
+
+let currentLang = 'es';
+
+function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === lang));
+    const t = TRANSLATIONS[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.textContent = t[key];
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        if (t[key] !== undefined) el.placeholder = t[key];
+    });
+    renderCalendar();
+    updateWaLinks();
+}
+
+// ================================================================
+// WHATSAPP
+// ================================================================
+const WA_NUMBER = '34688646407';
+
+function waUrl(msg) {
+    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+
+function updateWaLinks() {
+    const t = TRANSLATIONS[currentLang];
+    const bookForm = document.getElementById('bookingForm');
+    const dateVal  = document.getElementById('eventDateInput').value;
+    const nameVal  = bookForm.querySelector('[name="name"]').value;
+    const eventVal = bookForm.querySelector('[name="event_type"]').value;
+
+    let bookMsg = t.wa_book_msg;
+    if (dateVal)  bookMsg += ` Fecha: ${dateVal}.`;
+    if (nameVal)  bookMsg += ` Mi nombre es ${nameVal}.`;
+    if (eventVal) bookMsg += ` Tipo de evento: ${eventVal}.`;
+
+    document.getElementById('waBookBtn').href  = waUrl(bookMsg);
+    document.getElementById('waMsgBtn').href   = waUrl(t.wa_msg_msg);
+    document.getElementById('waBarBtn').href   = waUrl(t.wa_msg_msg);
+}
+
+// Update WhatsApp links whenever booking form fields change
+['eventDateInput'].concat(
+    Array.from(document.querySelectorAll('#bookingForm input'))
+        .map(el => el.id).filter(Boolean)
+).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateWaLinks);
+});
+
+// ================================================================
+// CALENDAR CONFIG — loaded from dates.js (edit that file to update)
+// ================================================================
+// CONFIG is defined in dates.js which is loaded before this script
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+let currentYear  = today.getFullYear();
+let currentMonth = today.getMonth();
+let selectedDate = null;
+
+function pad(n) { return String(n).padStart(2, '0'); }
+function toDateStr(y, m, d) { return `${y}-${pad(m + 1)}-${pad(d)}`; }
+
+function toDisplayDate(dateStr) {
+    const t = TRANSLATIONS[currentLang];
+    const [y, m, d] = dateStr.split('-');
+    return `${parseInt(d)} ${t.months[parseInt(m) - 1]} ${y}`;
+}
+
+function isUnavailable(dateStr) {
+    if (CONFIG.unavailableDates.includes(dateStr)) return true;
+    const dow = new Date(dateStr + 'T00:00:00').getDay();
+    return CONFIG.offDays.includes(dow);
+}
+
+function renderCalendar() {
+    const t        = TRANSLATIONS[currentLang];
+    const grid     = document.getElementById('calGrid');
+    const label    = document.getElementById('calMonthYear');
+    const prevBtn  = document.getElementById('prevMonth');
+
+    label.textContent = `${t.months[currentMonth]} ${currentYear}`;
+    prevBtn.disabled  = (currentYear === today.getFullYear() && currentMonth === today.getMonth());
+
+    grid.innerHTML = '';
+    t.days.forEach(name => {
+        const el = document.createElement('div');
+        el.className   = 'cal-day-name';
+        el.textContent = name;
+        grid.appendChild(el);
+    });
+
+    const firstDow    = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    for (let i = 0; i < firstDow; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'cal-day empty';
+        grid.appendChild(empty);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr  = toDateStr(currentYear, currentMonth, d);
+        const cellDate = new Date(dateStr + 'T00:00:00');
+        const el       = document.createElement('div');
+        el.className   = 'cal-day';
+        el.textContent = d;
+
+        if (cellDate < today) {
+            el.classList.add('past');
+        } else if (isUnavailable(dateStr)) {
+            el.classList.add('unavailable');
+        } else {
+            el.classList.add('available');
+            el.addEventListener('click', () => selectDate(dateStr));
+        }
+        if (dateStr === selectedDate) el.classList.add('selected');
+        grid.appendChild(el);
+    }
+}
+
+function selectDate(dateStr) {
+    selectedDate = dateStr;
+    renderCalendar();
+    document.getElementById('eventDateInput').value = dateStr;
+    const t = TRANSLATIONS[currentLang];
+    const banner = document.getElementById('selectedDateBanner');
+    banner.textContent = `${t.banner_prefix} ${toDisplayDate(dateStr)}`;
+    banner.classList.add('visible');
+    switchTab('book');
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    updateWaLinks();
+}
+
+document.getElementById('prevMonth').addEventListener('click', () => {
+    if (currentMonth === 0) { currentMonth = 11; currentYear--; } else currentMonth--;
+    renderCalendar();
+});
+document.getElementById('nextMonth').addEventListener('click', () => {
+    if (currentMonth === 11) { currentMonth = 0; currentYear++; } else currentMonth++;
+    renderCalendar();
+});
+
+renderCalendar();
+
+// ================================================================
+// TABS
+// ================================================================
+function switchTab(tab) {
+    document.getElementById('tabBook').classList.toggle('active', tab === 'book');
+    document.getElementById('tabMessage').classList.toggle('active', tab === 'message');
+    document.getElementById('panelBook').classList.toggle('active', tab === 'book');
+    document.getElementById('panelMessage').classList.toggle('active', tab === 'message');
+}
+
+// ================================================================
+// FORM SUBMISSION
+// ================================================================
+function wireForm(formId, successId) {
+    const form = document.getElementById(formId);
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('.form-submit');
+        btn.textContent = '...';
+        btn.disabled = true;
+        try {
+            const res = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' },
+            });
+            if (res.ok) {
+                form.style.display = 'none';
+                document.getElementById(successId).classList.add('visible');
+            } else {
+                btn.textContent = TRANSLATIONS[currentLang].btn_book || 'Error';
+                btn.disabled = false;
+            }
+        } catch (_) {
+            btn.textContent = TRANSLATIONS[currentLang].btn_book || 'Error';
+            btn.disabled = false;
+        }
+    });
+}
+
+wireForm('bookingForm', 'bookSuccess');
+wireForm('messageForm', 'messageSuccess');
+updateWaLinks();
+</script>
+</body>
+</html>
