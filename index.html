@@ -1005,7 +1005,7 @@ function setLang(lang) {
 const WA_NUMBER = '34688646407';
 
 function waUrl(msg) {
-    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+    return `whatsapp://send?phone=${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
 }
 
 function updateWaLinks() {
