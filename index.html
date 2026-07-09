@@ -491,52 +491,6 @@
             flex-wrap: wrap;
         }
         .whatsapp-bar p { color: #fff; font-size: 0.95rem; font-weight: 500; }
-        .btn-whatsapp {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #fff;
-            color: #25d366;
-            padding: 0.65rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        .btn-whatsapp:hover { background: #f0fff4; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
-        .whatsapp-inline {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            background: #25d366;
-            color: #fff;
-            padding: 0.85rem 2rem;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.2s;
-            margin-top: 0.75rem;
-        }
-        .whatsapp-inline:hover { background: #1fb959; transform: translateY(-1px); }
-        .or-divider {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 1.25rem 0 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-        .or-divider::before, .or-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: rgba(255,255,255,0.08);
-        }
-
         /* ── FOOTER ── */
         footer {
             background: var(--primary);
@@ -758,8 +712,6 @@
                 </div>
                 <input type="hidden" name="_subject" value="Nueva Solicitud de Reserva — Aitor Guitar">
                 <button type="submit" class="form-submit" data-i18n="btn_book">Enviar Solicitud de Reserva</button>
-                <div class="or-divider" data-i18n="or_divider">o también puedes</div>
-                <a id="waBookBtn" href="https://wa.me/34688646407" target="_blank" class="whatsapp-inline" data-i18n="wa_book">&#128249; Enviar por WhatsApp</a>
             </form>
             <div class="form-success" id="bookSuccess">
                 <div class="success-icon">✅</div>
@@ -795,8 +747,6 @@
                 </div>
                 <input type="hidden" name="_subject" value="Nuevo Mensaje — Aitor Guitar">
                 <button type="submit" class="form-submit" data-i18n="btn_msg">Enviar Mensaje</button>
-                <div class="or-divider" data-i18n="or_divider">o también puedes</div>
-                <a id="waMsgBtn" href="https://wa.me/34688646407" target="_blank" class="whatsapp-inline" data-i18n="wa_msg">&#128249; Enviar por WhatsApp</a>
             </form>
             <div class="form-success" id="messageSuccess">
                 <div class="success-icon">✅</div>
@@ -809,10 +759,7 @@
 
 <!-- WHATSAPP BAR -->
 <div class="whatsapp-bar">
-    <p data-i18n="wa_bar">¿Prefieres WhatsApp? ¡Escríbeme directamente!</p>
-    <a id="waBarBtn" href="https://wa.me/34688646407" target="_blank" class="btn-whatsapp">
-        &#128249; WhatsApp
-    </a>
+    <p data-i18n="wa_bar">&#128249; ¿Prefieres WhatsApp? Escríbeme al <strong>688 646 407</strong></p>
 </div>
 
 <!-- FOOTER -->
@@ -868,12 +815,7 @@ const TRANSLATIONS = {
         success_msg: 'Gracias por escribirme — te responderé lo antes posible.',
         banner_prefix: '📅 Fecha seleccionada:',
         footer: 'Todos los derechos reservados.',
-        wa_bar: '¿Prefieres WhatsApp? ¡Escríbeme directamente!',
-        or_divider: 'o también puedes',
-        wa_book: '📱 Enviar reserva por WhatsApp',
-        wa_msg:  '📱 Enviar mensaje por WhatsApp',
-        wa_book_msg: 'Hola Aitor, me gustaría reservarte para un evento.',
-        wa_msg_msg:  'Hola Aitor, tengo una consulta.',
+        wa_bar: '📱 ¿Prefieres WhatsApp? Escríbeme al 688 646 407',
         months: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
         days:   ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
     },
@@ -919,12 +861,7 @@ const TRANSLATIONS = {
         success_msg: 'Eskerrik asko idatzi izanagatik — ahalik eta lasterren erantzungo dizut.',
         banner_prefix: '📅 Hautatutako data:',
         footer: 'Eskubide guztiak erreserbatuta.',
-        wa_bar: 'WhatsApp nahiago duzu? Idatzi iezadazu zuzenean!',
-        or_divider: 'edo hau ere egin dezakezu',
-        wa_book: '📱 WhatsApp bidez bidali erreserba',
-        wa_msg:  '📱 WhatsApp bidez bidali mezua',
-        wa_book_msg: 'Kaixo Aitor, ekitaldi baterako kontratatu nahi zaitut.',
-        wa_msg_msg:  'Kaixo Aitor, galdera bat daukat.',
+        wa_bar: '📱 WhatsApp nahiago? Idatzi iezadazu 688 646 407 zenbakira',
         months: ['Urtarrila','Otsaila','Martxoa','Apirila','Maiatza','Ekaina','Uztaila','Abuztua','Iraila','Urria','Azaroa','Abendua'],
         days:   ['Ig','Al','As','Az','Og','Or','La'],
     },
@@ -970,12 +907,7 @@ const TRANSLATIONS = {
         success_msg: 'Thanks for getting in touch — I will reply as soon as possible.',
         banner_prefix: '📅 Selected date:',
         footer: 'All rights reserved.',
-        wa_bar: 'Prefer WhatsApp? Message me directly!',
-        or_divider: 'or you can also',
-        wa_book: '📱 Send booking via WhatsApp',
-        wa_msg:  '📱 Send message via WhatsApp',
-        wa_book_msg: 'Hi Aitor, I would like to book you for an event.',
-        wa_msg_msg:  'Hi Aitor, I have a question.',
+        wa_bar: '📱 Prefer WhatsApp? Message me on 688 646 407',
         months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
         days:   ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
     },
@@ -996,43 +928,7 @@ function setLang(lang) {
         if (t[key] !== undefined) el.placeholder = t[key];
     });
     renderCalendar();
-    updateWaLinks();
 }
-
-// ================================================================
-// WHATSAPP
-// ================================================================
-const WA_NUMBER = '34688646407';
-
-function waUrl(msg) {
-    return `whatsapp://send?phone=${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-}
-
-function updateWaLinks() {
-    const t = TRANSLATIONS[currentLang];
-    const bookForm = document.getElementById('bookingForm');
-    const dateVal  = document.getElementById('eventDateInput').value;
-    const nameVal  = bookForm.querySelector('[name="name"]').value;
-    const eventVal = bookForm.querySelector('[name="event_type"]').value;
-
-    let bookMsg = t.wa_book_msg;
-    if (dateVal)  bookMsg += ` Fecha: ${dateVal}.`;
-    if (nameVal)  bookMsg += ` Mi nombre es ${nameVal}.`;
-    if (eventVal) bookMsg += ` Tipo de evento: ${eventVal}.`;
-
-    document.getElementById('waBookBtn').href  = waUrl(bookMsg);
-    document.getElementById('waMsgBtn').href   = waUrl(t.wa_msg_msg);
-    document.getElementById('waBarBtn').href   = waUrl(t.wa_msg_msg);
-}
-
-// Update WhatsApp links whenever booking form fields change
-['eventDateInput'].concat(
-    Array.from(document.querySelectorAll('#bookingForm input'))
-        .map(el => el.id).filter(Boolean)
-).forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', updateWaLinks);
-});
 
 // ================================================================
 // CALENDAR CONFIG — loaded from dates.js (edit that file to update)
@@ -1172,7 +1068,6 @@ function wireForm(formId, successId) {
 
 wireForm('bookingForm', 'bookSuccess');
 wireForm('messageForm', 'messageSuccess');
-updateWaLinks();
 </script>
 </body>
 </html>
